@@ -5,6 +5,10 @@ VisualStudioVersion = 15.0.28010.2050
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FileWatchServiceComponent", "FileWatchServiceComponent\FileWatchServiceComponent.csproj", "{61E3033D-E09C-4B54-9610-AEB3A7C814A2}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FileWatchService", "FileWatchService\FileWatchService.csproj", "{F4D100AB-CF29-4448-8B21-7824CC5C4186}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SampleProcess", "SampleProcess\SampleProcess.csproj", "{C1D21E9B-53D5-430E-BB70-7483F237A6D8}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +19,14 @@ Global
 		{61E3033D-E09C-4B54-9610-AEB3A7C814A2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{61E3033D-E09C-4B54-9610-AEB3A7C814A2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{61E3033D-E09C-4B54-9610-AEB3A7C814A2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F4D100AB-CF29-4448-8B21-7824CC5C4186}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F4D100AB-CF29-4448-8B21-7824CC5C4186}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F4D100AB-CF29-4448-8B21-7824CC5C4186}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F4D100AB-CF29-4448-8B21-7824CC5C4186}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C1D21E9B-53D5-430E-BB70-7483F237A6D8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C1D21E9B-53D5-430E-BB70-7483F237A6D8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C1D21E9B-53D5-430E-BB70-7483F237A6D8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C1D21E9B-53D5-430E-BB70-7483F237A6D8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
