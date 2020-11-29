@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace FileWatchService.FileWatcher
+namespace FileWatchService
 {
     public class FileSystemWatcherControl : FileSystemWatcher
     {
@@ -21,8 +21,17 @@ namespace FileWatchService.FileWatcher
         public bool IsInitialize { get; set; }
 
         private const int RELOAD_WATCH_CHANGE = 10;
-
-        private IFileWatchEvent FileWatchEvent;
+        
+        public delegate void OnFileCreateEventHandler(string _fileName, string _fullPath);
+        public OnFileCreateEventHandler OnFileCreateEvent { get; set; }
+        public delegate void OnFileCreateCompleteEventHandler(string _fileName, string _fullPath);
+        public OnFileCreateCompleteEventHandler OnFileCreateCompleteEvent { get; set; }
+        public delegate void OnFileDeletedEventHandler(string _fileName, string _fullPath);
+        public OnFileDeletedEventHandler OnFileDeletedEvent { get; set; }
+        public delegate void OnFileRenamedEventHandler(string _fileName, string _fullPath);
+        public OnFileRenamedEventHandler OnFileRenamedEvent { get; set; }
+        public delegate void OnFileChangedEventHandler(string _fileName, string _fullPath);
+        public OnFileChangedEventHandler OnFileChangedEvent { get; set; }
 
         public delegate void ErrorEventHandler(ErrorEventArgs _eventArgs);
         public ErrorEventHandler ErrorEvent { get; set; }
@@ -31,17 +40,9 @@ namespace FileWatchService.FileWatcher
         private Timer RefreshWatcherChangesTimer;
 
         /// <summary>
-        /// 監聽事件類型枚舉
-        /// </summary>
-        public enum WatcherEventType
-        {
-            Create, Change, Delete
-        }
-
-        /// <summary>
         /// 建構子
         /// </summary>
-        public FileSystemWatcherControl(string _name, string _path, IFileWatchEvent _fileWatchEvent)
+        public FileSystemWatcherControl(string _name, string _path)
         {
             this.Name = _name;
             this.IsIncludeSub = true;
@@ -49,8 +50,6 @@ namespace FileWatchService.FileWatcher
             this.NotifyFilter = _NOTIFYFILTER;
             this.InternalBufferSize = _BUFFERSIXE;
             this.EnableRaisingEvents = true;
-
-            this.FileWatchEvent = _fileWatchEvent;
         }
 
         /// <summary>
@@ -83,10 +82,10 @@ namespace FileWatchService.FileWatcher
             this.WatcherChangedTimes = new Dictionary<string, WatcherChangeInfo>();
             this.RefreshWatcherChangesTimer = new Timer(new TimerCallback(this.ClearWatcherChangedTimes), null, 5, 5);
 
-            if ((this.WatcherType & WatcherChangeTypes.Created) == WatcherChangeTypes.Created) this.Created += new FileSystemEventHandler(WatcherOnChanges);
-            if ((this.WatcherType & WatcherChangeTypes.Changed) == WatcherChangeTypes.Changed) this.Changed += new FileSystemEventHandler(WatcherOnChanges);
-            if ((this.WatcherType & WatcherChangeTypes.Renamed) == WatcherChangeTypes.Renamed) this.Renamed += new RenamedEventHandler(WatcherOnChanges);
-            if ((this.WatcherType & WatcherChangeTypes.Deleted) == WatcherChangeTypes.Deleted) this.Deleted += new FileSystemEventHandler(WatcherOnChanges);
+            this.Created += new FileSystemEventHandler(WatcherOnChanges);
+            this.Changed += new FileSystemEventHandler(WatcherOnChanges);
+            this.Renamed += new RenamedEventHandler(WatcherOnChanges);
+            this.Deleted += new FileSystemEventHandler(WatcherOnChanges);
 
             this.Error += new System.IO.ErrorEventHandler(OnError);
 
@@ -158,16 +157,14 @@ namespace FileWatchService.FileWatcher
             {
                 case WatcherChangeTypes.Created:
                     {
-                        //On Initial
-                        this.FileWatchEvent.OnFileInitialEvent(info.Name, info.FullName);
-
                         //On Create
-                        this.FileWatchEvent.OnFileCreateEvent(info.Name, info.FullName);
+                        this.OnFileCreateEvent?.Invoke(info.Name, info.FullName);
                     }
                     break;
                 case WatcherChangeTypes.Changed:
-                case WatcherChangeTypes.Renamed:
                     {
+                        this.OnFileChangedEvent?.Invoke(info.Name, info.FullName);
+
                         //等待檔案處理完畢
                         if (!WaitForFile(new FileInfo(eventArgs.FullPath)))
                         {
@@ -175,13 +172,18 @@ namespace FileWatchService.FileWatcher
                             return;
                         }
 
-                        this.FileWatchEvent.OnFileCreateCompleteEvent(info.Name, info.FullName);
+                        this.OnFileCreateCompleteEvent?.Invoke(info.Name, info.FullName);
+                    }
+                    break;
+                case WatcherChangeTypes.Renamed:
+                    {
+                        this.OnFileRenamedEvent?.Invoke(info.Name, info.FullName);
                     }
                     break;
 
                 case WatcherChangeTypes.Deleted:
                     {
-                        //Nothing
+                        this.OnFileDeletedEvent?.Invoke(info.Name, info.FullName);
                     }
                     break;
             }

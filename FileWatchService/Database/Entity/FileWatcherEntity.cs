@@ -12,6 +12,7 @@ namespace FileWatchService.Model
         public string WatcherID { get; set; }
         public string WatcherName { get; set; }
         public string WatcherPath { get; set; }
+        public bool Enable { get; set; }
 
     }
 }

@@ -1,14 +1,17 @@
-﻿using NLog;
+﻿using FileWatchService.Model;
+using NLog;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+
 namespace FileWatchService.Service
 {
     public class MainService :IDisposable
     {
+        Dictionary<string, FileWatcher> FileWatchers;
 
         public MainService()
         {
@@ -17,7 +20,14 @@ namespace FileWatchService.Service
 
         public void Initialize()
         {
+            //初始化 FileWatcher
+            this.FileWatchers = new Dictionary<string, FileWatcher>();
 
+            //TODO 從 DB 內取出 Process
+            List<ProcessInfoEntity> processInfos;
+
+            //TODO 從 DB 內取出 Watchers
+            List<FileWatcherEntity> fileWatchers;
         }
 
         #region IDisposable Support

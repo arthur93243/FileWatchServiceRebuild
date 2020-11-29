@@ -13,7 +13,6 @@ namespace FileWatchService.Model
         public string ProcessLibraryName { get; set; }
         public string ProcessLibraryFullName { get; set; }
         public string ProcessMainClassFullName { get; set; }
-        public bool IsValid { get; set; }
         public DateTime CreateTime { get; set; }
     }
 }

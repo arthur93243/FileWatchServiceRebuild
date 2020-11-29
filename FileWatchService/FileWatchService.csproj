@@ -38,6 +38,12 @@
     <StartupObject />
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Dapper, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Dapper.2.0.78\lib\net461\Dapper.dll</HintPath>
+    </Reference>
+    <Reference Include="DapperExtensions, Version=1.6.3.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\DapperExtensions.1.6.3\lib\net45\DapperExtensions.dll</HintPath>
+    </Reference>
     <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.12.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
@@ -65,14 +71,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="FileWatcher\FileSystemWatcherControl.cs">
+    <Compile Include="Database\DBHelper.cs" />
+    <Compile Include="Database\SQLiteHelper.cs" />
+    <Compile Include="Process\FileSystemWatcherControl.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="FileWatcher\FileWatcher.cs" />
+    <Compile Include="Process\FileWatcher.cs" />
     <Compile Include="LogHelper\LogHelper.cs" />
-    <Compile Include="Model\FileWatcherEntity.cs" />
-    <Compile Include="Model\ProcessInfoEntity.cs" />
-    <Compile Include="Model\ServiceInfoEntity.cs" />
+    <Compile Include="Database\Entity\FileWatcherEntity.cs" />
+    <Compile Include="Database\Entity\ProcessInfoEntity.cs" />
+    <Compile Include="Database\Entity\ServiceInfoEntity.cs" />
     <Compile Include="Service\ProjectInstaller.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -109,6 +117,9 @@
       <Project>{61e3033d-e09c-4b54-9610-aeb3a7c814a2}</Project>
       <Name>FileWatchServiceComponent</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Model\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\Stub.System.Data.SQLite.Core.NetFramework.1.0.113.3\build\net46\Stub.System.Data.SQLite.Core.NetFramework.targets" Condition="Exists('..\packages\Stub.System.Data.SQLite.Core.NetFramework.1.0.113.3\build\net46\Stub.System.Data.SQLite.Core.NetFramework.targets')" />

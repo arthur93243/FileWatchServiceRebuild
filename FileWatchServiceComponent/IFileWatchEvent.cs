@@ -12,11 +12,6 @@ namespace SampleProcess
     public interface IFileWatchEvent
     {
         /// <summary>
-        /// 檔案初始化時事件
-        /// </summary>
-        void OnFileInitialEvent(string _fileName, string _fullPath);
-
-        /// <summary>
         /// 檔案建立時事件
         /// </summary>
         void OnFileCreateEvent(string _fileName, string _fullPath);
@@ -29,16 +24,16 @@ namespace SampleProcess
         /// <summary>
         /// 檔案刪除時事件
         /// </summary>
-        //void OnFileDeletedEvent();
+        void OnFileDeletedEvent();
 
         /// <summary>
         /// 檔案重新命名時事件
         /// </summary>
-        //void OnFileRenamedEvent();
+        void OnFileRenamedEvent();
 
         /// <summary>
         /// 檔案變更時事件
         /// </summary>
-        //void OnFileChangedEvent();
+        void OnFileChangedEvent();
     }
 }
